@@ -7,7 +7,7 @@ let shortenedName = "HMAlgorithms"
 
 _ = Package(
   name: "HemiprocneMystaceaAlgorithms",
-  platforms: [.macOS(.v11), .iOS(.v13)],
+  platforms: [.macOS(.v12), .iOS(.v15)],
   products: [.library(name: shortenedName, targets: [shortenedName])],
   dependencies: dependencies.map(\.package),
   targets: [
@@ -29,6 +29,7 @@ nonisolated var dependencies: [Dependency]  {
     .apple(repositoryName: "algorithms"),
     .apple(repositoryName: "collections"),
     .catterwaul(name: "Cast"),
+    .catterwaul(name: "Thrappture"),
     .catterwaul(name: "Tuplé", repositoryName: "Tuplay")
   ]
 }

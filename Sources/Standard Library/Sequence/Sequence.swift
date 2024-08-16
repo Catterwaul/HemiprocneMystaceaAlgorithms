@@ -124,3 +124,8 @@ public extension Sequence {
     )
   }
 }
+
+/// An infinite sequence of a single value.
+@inlinable public func sequence<Element>(_ element: Element) -> some Sequence<Element> {
+  sequence(first: element, next: \.self)
+}

@@ -2,7 +2,7 @@ import HMAlgorithms
 import Testing
 
 struct ChainTests {
-  @Test func test_chain() {
+  @Test func _chain() {
     #expect(
       chain("🔗" as Character, "⛓️").elementsEqual("🔗⛓️")
     )

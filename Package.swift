@@ -7,7 +7,7 @@ let shortenedName = "HMAlgorithms"
 
 _ = Package(
   name: "HemiprocneMystaceaAlgorithms",
-  platforms: [.macOS(.v12), .iOS(.v15)],
+  platforms: [.macOS(.v14), .iOS(.v17)],
   products: [.library(name: shortenedName, targets: [shortenedName])],
   dependencies: dependencies.map(\.package),
   targets: [

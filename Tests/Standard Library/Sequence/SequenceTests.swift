@@ -35,6 +35,17 @@ struct SequenceTests {
     #expect(dictionary.max(by: \.value)?.key == "💯")
   }
 
+  @Test func max_and_min_withOptionals() {
+    let catNames = [
+      nil, "Frisky", nil, "Fluffy", nil,
+      nil, "Gobo", nil,
+      nil, "Mousse", nil, "Ozma", nil
+    ]
+
+    #expect(catNames.min(by: \.self) == "Fluffy")
+    #expect(catNames.max(by: \.self) == "Ozma")
+  }
+
   @Test func prefixThroughFirst() {
     #expect(
       .init([1, 2, 3, 3, 5].prefixThroughFirst { $0 >= 3 })

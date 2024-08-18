@@ -39,7 +39,14 @@ public extension Sequence {
       self.min { try comparable($0) < comparable($1) }
     )
   }
-  
+
+  /// - Returns: `min` for the elements with non-nil `comparable`s.
+  func min(
+    by comparable: (Element) throws -> (some Comparable)?
+  ) rethrows -> Element? {
+    try compacted(by: comparable).min(by: \.unwrapped)?.element
+  }
+
   /// The maximum element in the sequence, using a comparison closure.
   /// - Parameter comparable: A closure returning a comparable value to compare, for each element.
   /// More often than not, a key path.
@@ -52,7 +59,27 @@ public extension Sequence {
       self.max { try comparable($0) < comparable($1) }
     )
   }
+
+  /// - Returns: `max` for the elements with non-nil `comparable`s.
+  func max(
+    by comparable: (Element) throws -> (some Comparable)?
+  ) rethrows -> Element? {
+    try compacted(by: comparable).max(by: \.unwrapped)?.element
+  }
+
+  // MARK: -
   
+  /// A `Collection` of all non-nil elements whose `optional`s are also non-nil.
+  /// - Parameter optional: Transforms an `Element` into an `Optional`.
+  /// - Returns: A `Collection` of tuples of non-nil elements with their `optional`s unwrapped.
+  func compacted<Error, Wrapped>(
+    by optional: (Element) throws(Error) -> Wrapped?
+  ) throws(Error) -> some Collection<(element: Element, unwrapped: Wrapped)> {
+    try lazy.map { element throws(Error) in
+      try optional(element).map { (element, $0) }
+    }.compacted()
+  }
+
   /// Like `prefix(while:)`, but including one more element.
   @inlinable func prefixThroughFirst(
     where predicate: @escaping (Element) -> Bool

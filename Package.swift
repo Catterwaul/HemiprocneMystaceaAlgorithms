@@ -29,6 +29,7 @@ nonisolated var dependencies: [Dependency]  {
     .apple(repositoryName: "algorithms"),
     .apple(repositoryName: "collections"),
     .catterwaul(name: "Cast"),
+    .catterwaul(name: "Some"),
     .catterwaul(name: "Thrappture"),
     .catterwaul(name: "Tuplé", repositoryName: "Tuplay")
   ]

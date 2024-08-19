@@ -72,11 +72,23 @@ struct SequenceTests {
 
   @Test func reduce() {
     let sequence = [1, 2, 3, 4]
-    #expect(sequence.reductions(+) == [1, 3, 6, 10])
-    #expect(sequence.reduce(+) == 10)
 
-    #expect(EmptyCollection<Int>().reductions(+) == [])
-    #expect(EmptyCollection<Int>().reduce(+) == nil)
+    do {
+      #expect(sequence.reductions(+) == [1, 3, 6, 10])
+      #expect(sequence.reduce(+) == 10)
+
+      #expect(EmptyCollection<Int>().reductions(+) == [])
+      #expect(EmptyCollection<Int>().reduce(+) == nil)
+    }
+
+    do {
+      func chase(_ string: String) -> String { "\(string)🐈" }
+      #expect(sequence.reduce("🏃", chase) == "🏃🐈🐈🐈🐈")
+      #expect(
+        sequence.reduce(into: "🏃") { $0 = chase($0) }
+        == "🏃🐈🐈🐈🐈"
+      )
+    }
   }
 
   @Test func test_shifted() {

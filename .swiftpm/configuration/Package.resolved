@@ -1,5 +1,5 @@
 {
-  "originHash" : "0f793566e5ed8ced4dd2cc29e297cdf952e7e205a8f24f4980e787427303a0fe",
+  "originHash" : "4c6537b9497e55e6dcae538acce56228cfdfb36999696f02fbb2d81aacbacff9",
   "pins" : [
     {
       "identity" : "cast",
@@ -61,7 +61,7 @@
       "location" : "https://github.com/Catterwaul/Thrappture",
       "state" : {
         "branch" : "main",
-        "revision" : "e3f9d3b470d170c293a3ce4ae84df4a00996461b"
+        "revision" : "e6aae00285098bf65c01ac154a677e6679973c11"
       }
     },
     {

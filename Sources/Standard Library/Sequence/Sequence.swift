@@ -25,6 +25,15 @@ public extension Sequence {
   /// - Complexity: O(n)
   @inlinable var last: Element? { reduce { $1 } }
 
+  /// Like `zip`ping with the iterators of all subsequences, incrementally dropping early elements.
+  /// - Note: Begins with the iterator for the full sequence (dropping zero).
+  @inlinable var withDropIterators: some Sequence<(element: Element, iterator: Iterator)> {
+    sequence(state: makeIterator()) {
+      let iterator = $0
+      return $0.next().map { ($0, iterator) }
+    }
+  }
+
   // MARK: - Methods
   
   /// The minimum element in the sequence, using a comparison closure.

@@ -1,16 +1,17 @@
 import typealias Tuplé.Vectuple2
+import Algorithms
 
 public extension Sequence where Element: AdditiveArithmetic {
   /// - Complexity: O(n)
   /// - Returns: `nil` is the sequence is empty.
-  var sum: Element? { reduce(+) }
+  @inlinable var sum: Element? { reduce(+) }
 }
 
 public extension Sequence {
   /// The signed area of a 2D graph.
   /// - Precondition: This sequence is sorted by its **`x`** values.
   /// - Note: This should be a property but the necessary constraints can only be applied to a method.
-  func definiteIntegral<Scalar: FloatingPoint>() -> Scalar?
+  @inlinable func definiteIntegral<Scalar: FloatingPoint>() -> Scalar?
   where Element == SIMD2<Scalar> {
     guard !isEmpty else { return nil }
 
@@ -28,7 +29,7 @@ public extension Sequence {
   /// The signed area of a 2D graph.
   /// - Precondition: This sequence is sorted by its **`x`** values.
   /// - Note: This should be a property but the necessary constraints can only be applied to a method.
-  func definiteIntegral<Scalar: FloatingPoint & SIMDScalar>() -> Scalar?
+  @inlinable func definiteIntegral<Scalar: FloatingPoint & SIMDScalar>() -> Scalar?
   where Element == Vectuple2<Scalar> {
     lazy.map(SIMD2.init(_:_:)).definiteIntegral()
   }

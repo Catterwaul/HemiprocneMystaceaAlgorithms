@@ -25,7 +25,7 @@ struct SequenceTests {
   @Test func distributedUniformly() {
     #expect(
       (1...10).distributedUniformly(shareCount: 3)
-      == [[1, 4, 7, 10], [2, 5, 8], [3, 6, 9]]
+        .elementsEqual([[1, 4, 7, 10], [2, 5, 8], [3, 6, 9]])
     )
   }
 

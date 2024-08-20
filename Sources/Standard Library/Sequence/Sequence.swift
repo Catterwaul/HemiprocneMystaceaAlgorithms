@@ -41,9 +41,9 @@ public extension Sequence {
   }
 
   /// - Returns: `min` for the elements with non-nil `comparable`s.
-  func min(
-    by comparable: (Element) throws -> (some Comparable)?
-  ) rethrows -> Element? {
+  @inlinable func min<Error>(
+    by comparable: (Element) throws(Error) -> (some Comparable)?
+  ) throws(Error) -> Element? {
     try compacted(by: comparable).min(by: \.unwrapped)?.element
   }
 
@@ -61,9 +61,9 @@ public extension Sequence {
   }
 
   /// - Returns: `max` for the elements with non-nil `comparable`s.
-  func max(
-    by comparable: (Element) throws -> (some Comparable)?
-  ) rethrows -> Element? {
+  @inlinable func max<Error>(
+    by comparable: (Element) throws(Error) -> (some Comparable)?
+  ) throws(Error) -> Element? {
     try compacted(by: comparable).max(by: \.unwrapped)?.element
   }
 
@@ -72,7 +72,7 @@ public extension Sequence {
   /// A `Collection` of all non-nil elements whose `optional`s are also non-nil.
   /// - Parameter optional: Transforms an `Element` into an `Optional`.
   /// - Returns: A `Collection` of tuples of non-nil elements with their `optional`s unwrapped.
-  func compacted<Error, Wrapped>(
+  @inlinable func compacted<Error, Wrapped>(
     by optional: (Element) throws(Error) -> Wrapped?
   ) throws(Error) -> some Collection<(element: Element, unwrapped: Wrapped)> {
     try lazy.map { element throws(Error) in
@@ -112,16 +112,10 @@ public extension Sequence {
   /// Distribute the elements as uniformly as possible, as if dealing one-by-one into shares.
   /// - Note: Later shares will be one smaller if the element count is not a multiple of `shareCount`.
   @inlinable func distributedUniformly(shareCount: Int)
-  -> some Sequence<StridingSequence<DropFirstSequence<Self>>> & LazySequenceProtocol {
+  -> some Sequence<[Element]> & LazySequenceProtocol {
     (0..<shareCount).lazy.map {
-      dropFirst($0).striding(by: shareCount)
+      .init(dropFirst($0).striding(by: shareCount))
     }
-  }
-
-  /// Distribute the elements as uniformly as possible, as if dealing one-by-one into shares.
-  /// - Note: Later shares will be one smaller if the element count is not a multiple of `shareCount`.
-  @inlinable func distributedUniformly(shareCount: Int) -> [[Element]] {
-    .init(distributedUniformly(shareCount: shareCount).map(Array.init))
   }
 
   // MARK: -

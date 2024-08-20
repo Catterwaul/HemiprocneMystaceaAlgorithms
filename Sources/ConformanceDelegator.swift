@@ -9,21 +9,21 @@ public protocol ConformanceDelegator {
 
 // MARK: - Comparable
 public extension Comparable where Self: ConformanceDelegator, Delegate: Comparable {
-  static func < (lhs: Self, rhs: Self) -> Bool {
+  @inlinable static func < (lhs: Self, rhs: Self) -> Bool {
     forwardToDelegates(lhs, <, rhs)
   }
 }
 
 // MARK: - Equatable
 public extension Equatable where Self: ConformanceDelegator, Delegate: Equatable {
-  static func == (lhs: Self, rhs: Self) -> Bool {
+  @inlinable static func == (lhs: Self, rhs: Self) -> Bool {
     forwardToDelegates(lhs, ==, rhs)
   }
 }
 
 // MARK: - private
-fileprivate extension ConformanceDelegator {
-  static func forwardToDelegates<Result>(
+extension ConformanceDelegator {
+  @inlinable static func forwardToDelegates<Result>(
     _ self0: Self,
     _ requirement: (Delegate, Delegate) -> Result,
     _ self1: Self

@@ -2,5 +2,5 @@
 @inlinable public func zip<Sequence: Swift.Sequence, Constant>(
   _ sequence: Sequence, constant: Constant
 ) -> some Swift.Sequence<(Sequence.Element, Constant)> {
-  zip(sequence, HMAlgorithms.sequence(constant))
+  zip(sequence, infiniteSequence(of: constant))
 }

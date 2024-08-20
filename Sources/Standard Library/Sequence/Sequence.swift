@@ -68,6 +68,33 @@ public extension Sequence {
   }
 
   // MARK: -
+  /// Sorted by a common `Comparable` value.
+  /// - Parameter comparable: A closure returning a comparable value to compare, for each element.
+  /// More often than not, a key path.
+  @inlinable func sorted<each Comparable: Swift.Comparable, Error>(
+    by comparable: (Element) throws(Error) -> (repeat each Comparable)
+  ) throws(Error) -> [Element] {
+    try forceCastError(
+      to: Error.self,
+      try sorted { try (repeat each comparable($0)) < (repeat each comparable($1)) }
+    )
+  }
+
+  /// Whether the elements of this sequence are sorted by common `Comparable` values.
+  /// - Parameter comparable: A closure returning a comparable value to compare, for each element.
+  /// More often than not, a key path.
+  @inlinable func isSorted<each Comparable: Swift.Comparable, Error>(
+    by comparable: (Element) throws(Error) -> (repeat each Comparable)
+  ) throws(Error) -> Bool {
+    try forceCastError(
+      to: Error.self,
+      try adjacentPairs().allSatisfy {
+        try (repeat each comparable($0)) <= (repeat each comparable($1))
+      }
+    )
+  }
+
+  // MARK: -
   
   /// A `Collection` of all non-nil elements whose `optional`s are also non-nil.
   /// - Parameter optional: Transforms an `Element` into an `Optional`.
@@ -78,6 +105,15 @@ public extension Sequence {
     try lazy.map { element throws(Error) in
       try optional(element).map { (element, $0) }
     }.compacted()
+  }
+
+  /// Distribute the elements as uniformly as possible, as if dealing one-by-one into shares.
+  /// - Note: Later shares will be one smaller if the element count is not a multiple of `shareCount`.
+  @inlinable func distributedUniformly(shareCount: Int)
+  -> some Sequence<[Element]> & LazySequenceProtocol {
+    (0..<shareCount).lazy.map {
+      .init(dropFirst($0).striding(by: shareCount))
+    }
   }
 
   /// Like `prefix(while:)`, but including one more element.
@@ -107,46 +143,9 @@ public extension Sequence {
       )
     }
   }
-
-  // MARK: -
-  /// Distribute the elements as uniformly as possible, as if dealing one-by-one into shares.
-  /// - Note: Later shares will be one smaller if the element count is not a multiple of `shareCount`.
-  @inlinable func distributedUniformly(shareCount: Int)
-  -> some Sequence<[Element]> & LazySequenceProtocol {
-    (0..<shareCount).lazy.map {
-      .init(dropFirst($0).striding(by: shareCount))
-    }
-  }
-
-  // MARK: -
-  /// Sorted by a common `Comparable` value.
-  /// - Parameter comparable: A closure returning a comparable value to compare, for each element.
-  /// More often than not, a key path.
-  @inlinable func sorted<each Comparable: Swift.Comparable, Error>(
-    by comparable: (Element) throws(Error) -> (repeat each Comparable)
-  ) throws(Error) -> [Element] {
-    try forceCastError(
-      to: Error.self,
-      try sorted { try (repeat each comparable($0)) < (repeat each comparable($1)) }
-    )
-  }
-
-  /// Whether the elements of this sequence are sorted by common `Comparable` values.
-  /// - Parameter comparable: A closure returning a comparable value to compare, for each element.
-  /// More often than not, a key path.
-  @inlinable func isSorted<each Comparable: Swift.Comparable, Error>(
-    by comparable: (Element) throws(Error) -> (repeat each Comparable)
-  ) throws(Error) -> Bool {
-    try forceCastError(
-      to: Error.self,
-      try adjacentPairs().allSatisfy {
-        try (repeat each comparable($0)) <= (repeat each comparable($1))
-      }
-    )
-  }
 }
 
 /// An infinite sequence of a single value.
-@inlinable public func sequence<Element>(_ element: Element) -> some Sequence<Element> {
+@inlinable public func infiniteSequence<Element>(of element: Element) -> some Sequence<Element> {
   sequence(first: element, next: \.self)
 }

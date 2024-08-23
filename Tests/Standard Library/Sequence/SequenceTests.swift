@@ -13,7 +13,7 @@ struct SequenceTests {
     #expect(!stride(from: 1, through: 1, by: 1).isEmpty)
   }
   
-  @Test func first_last() throws {
+  @Test func first_last() {
     let odds = stride(from: 1, through: 10, by: 2)
     #expect(odds.first == 1)
     #expect(odds.prefix(0).first == nil)

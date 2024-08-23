@@ -85,7 +85,7 @@ public extension Sequence {
   ) throws(Error) -> [Element] {
     try forceCastError(
       to: Error.self,
-      try sorted { try (repeat each comparable($0)) < (repeat each comparable($1)) }
+      sorted { try (repeat each comparable($0)) < (repeat each comparable($1)) }
     )
   }
 
@@ -97,14 +97,35 @@ public extension Sequence {
   ) throws(Error) -> Bool {
     try forceCastError(
       to: Error.self,
-      try adjacentPairs().allSatisfy {
+      adjacentPairs().allSatisfy {
         try (repeat each comparable($0)) <= (repeat each comparable($1))
       }
     )
   }
 
   // MARK: -
-  
+
+  /// The only match for a predicate.
+  /// - Throws: `Error`, `AnySequence<Element>.OnlyMatchError`
+  @inlinable func onlyMatch<Error>(
+    for isMatch: (Element) throws(Error) -> Bool
+  ) throws -> Element {
+    typealias Error = AnySequence<Element>.OnlyMatchError
+    guard let onlyMatch: Element = (
+      try reduce(into: nil) { onlyMatch, element in
+        switch (onlyMatch, try isMatch(element)) {
+        case (_, false): break
+        case (nil, true): onlyMatch = element
+        case (.some, true): throw Error.moreThanOneMatch
+        }
+      }
+    ) else { throw Error.noMatches }
+
+    return onlyMatch
+  }
+
+  // MARK: -
+
   /// A `Collection` of all non-nil elements whose `optional`s are also non-nil.
   /// - Parameter optional: Transforms an `Element` into an `Optional`.
   /// - Returns: A `Collection` of tuples of non-nil elements with their `optional`s unwrapped.

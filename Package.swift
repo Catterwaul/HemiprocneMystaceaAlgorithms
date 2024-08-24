@@ -26,11 +26,7 @@ _ = Package(
 
 nonisolated var dependencies: [Dependency]  {
   [ .swift(repositoryName: "docc-plugin"),
-    .apple(repositoryName: "algorithms"),
-    .apple(repositoryName: "collections"),
-    .catterwaul(name: "Cast"),
-    .catterwaul(name: "Thrappture"),
-    .catterwaul(name: "Tuplé", repositoryName: "Tuplay")
+    .apple(repositoryName: "collections")
   ]
 }
 

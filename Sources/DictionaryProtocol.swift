@@ -205,6 +205,13 @@ public extension DictionaryProtocol where Value == Int {
   @inlinable init(bucketing unbucketedKeys: some Sequence<Key>) {
     self.init(zip(unbucketedKeys, constant: 1), uniquingKeysWith: +)
   }
+  
+  /// Treating this dictionary as a "counted set", reduce the element's value by 1.
+  /// - Throws: If `countedSetElement` is not a key.
+  @inlinable mutating func remove(countedSetElement: Key) throws {
+    guard let count = self[countedSetElement] else { throw error }
+    self[countedSetElement] = count == 1 ? nil : count - 1
+  }
 }
 
 // MARK: - cannot be represented within DictionaryProtocol

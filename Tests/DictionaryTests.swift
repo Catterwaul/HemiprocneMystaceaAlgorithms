@@ -174,6 +174,22 @@ struct DictionaryTests {
   }
 
 // MARK: - Methods
+  @Test func flatMap() {
+    XCTAssert(
+      [ "red": ["🍷", "💄"],
+        "green": ["🤢"],
+        "blue": ["🥏", "👮‍♀️", "👮‍♀️"]
+      ].flatMap().sorted { $0.key }
+        .elementsEqual(
+          [ "blue": "🥏", "blue": "👮‍♀️", "blue": "👮‍♀️",
+            "green": "🤢",
+            "red": "🍷", "red": "💄",
+          ] as KeyValuePairs,
+          by: ==
+        )
+    )
+  }
+
   @Test func mapKeys() {
     func test<Dictionary: DictionaryProtocol<Int, String>>(_: Dictionary.Type) {
       let dictionary = [100: "💯", 17: "📅"] as Dictionary

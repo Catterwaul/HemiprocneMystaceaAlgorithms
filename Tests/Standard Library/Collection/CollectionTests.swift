@@ -13,6 +13,23 @@ struct CollectionTests {
     )
   }
 
+  @Test func subscript_modulo() {
+    let ints = [1, 2]
+    for (index, int) in [
+      (0, 1), (1, 2),
+      (2, 1), (3, 2),
+      (-1, 2), (-2, 1),
+      (-3, 2), (-4, 1)
+    ] {
+      XCTAssertEqual(ints[cycling: index], int)
+    }
+
+    XCTAssertEqual(
+      "abc"["c", moduloOffset: 1],
+      "a"
+    )
+  }
+
   @Test func subscript_startOffsetBy() {
     #expect("🎤🐈"[startIndexOffsetBy: 1] ==  "🐈")
   }
@@ -39,5 +56,22 @@ struct CollectionTests {
 
   @Test func rotated() {
     #expect(Array([0, 1, 2, 3].rotated(by: -1)) == [3, 0, 1, 2])
+  }
+
+  @available(
+    swift, deprecated: 6,
+    message: "Won't compile without the `shifted` constant"
+  )
+  @Test func shifted() {
+    let shifted = stride(from: 0, through: 3, by: 1).shifted(by: 1)
+    XCTAssertEqual(
+      Array(shifted),
+      [1, 2, 3, 0]
+    )
+
+    XCTAssertEqual(
+      Array([0, 1, 2, 3].shifted(by: -1)),
+      [3, 0, 1, 2]
+    )
   }
 }

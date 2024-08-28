@@ -176,6 +176,15 @@ public extension DictionaryProtocol where Value: Equatable {
   }
 }
 
+// MARK: - Value: Sequence
+public extension DictionaryProtocol where Value: Sequence {
+  /// Flatten value sequences,
+  /// pairing each value element with its original key.
+  @inlinable func flatMap() -> some Sequence<(key: Key, value: Value.Element)> {
+    lazy.flatMap { key, value in value.lazy.map { (key, $0) } }
+  }
+}
+
 // MARK: - Key == Value
 public extension DictionaryProtocol where Key == Value {
   /// The longest series of elements that will lead to `destination`.

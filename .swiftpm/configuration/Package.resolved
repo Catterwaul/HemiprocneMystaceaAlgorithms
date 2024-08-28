@@ -1,5 +1,5 @@
 {
-  "originHash" : "4c6537b9497e55e6dcae538acce56228cfdfb36999696f02fbb2d81aacbacff9",
+  "originHash" : "2730244f7d0a284b553251a56dc4567c5e56b8df4e07d533976aaf400ae28568",
   "pins" : [
     {
       "identity" : "cast",
@@ -8,6 +8,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "ff40c9cb95e6070a9c5af8adf095e52efa1d13a9"
+      }
+    },
+    {
+      "identity" : "some",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Catterwaul/Some",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1842db334c9f5cad6fa9d82574f81d5cc316cf6b"
       }
     },
     {

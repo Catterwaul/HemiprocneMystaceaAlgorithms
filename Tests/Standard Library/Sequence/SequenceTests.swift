@@ -101,7 +101,7 @@ struct SequenceTests {
     )
   }
 
-  @Test func isSorted() {
+  @Test func isSorted() throws {
     struct TypeWithComparable {
       let comparable: Int
     }
@@ -111,6 +111,6 @@ struct SequenceTests {
       stride(from: -random, through: random, by: random)
         .lazy.map(TypeWithComparable.init)
     let chain = chain(.init(comparable: -random), stride)
-    #expect(chain.isSorted(by: \.comparable))
+    try #expect(try chain.isSorted(by: \.comparable))
   }
 }

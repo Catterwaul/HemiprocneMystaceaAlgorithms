@@ -12,4 +12,17 @@ struct ArrayTests {
       _ = try [Int](mirrorChildValuesOf: (1, 2, "3", 4, 5))
     }
   }
+
+  @Test func without() {
+    let rabbitsAndEars = ["👯", "🐇", "🐰", "👂", "🌽"]
+
+    #expect(
+      rabbitsAndEars.without(prefix: ["🐰"]) == nil
+    )
+
+    #expect(
+      rabbitsAndEars.without(prefix: ["👯", "🐇"])
+      == ["🐰", "👂", "🌽"]
+    )
+  }
 }

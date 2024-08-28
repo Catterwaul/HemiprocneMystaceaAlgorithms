@@ -13,9 +13,6 @@ public extension Collection {
     indices.lazy.map { self[$0] }
   }
 
-  /// Subscript at an offset index.
-  ///
-  /// Useful for collections that don't use integer indices, like `String`.
   /// - Complexity: O(`position`)
   @inlinable subscript(startIndexOffsetBy position: Int) -> Element {
     self[index(startIndex, offsetBy: position)]
@@ -32,9 +29,28 @@ public extension Collection {
       return self[index]
     }
   }
+
+  // MARK: - Methods
+  /// Remove the beginning or end of a `Collection`.
+  /// - Parameters:
+  ///   - adfix: A prefix or suffix.
+  ///   - hasAdfix: Whether a collection is adfixed by `adfix`.
+  ///   - drop: Create a `SubSequence` by removing `count` `Element`s.
+  /// - Returns: `nil` if `hasAffix(affix)` is `false`.
+  @inlinable func without<Adfix: Sequence<Element>>(
+    adfix: Adfix,
+    hasAdfix: (Adfix) -> Bool,
+    drop: (_ count: Int) -> SubSequence
+  ) -> SubSequence? {
+    guard hasAdfix(adfix) else { return nil }
+
+    return drop(adfix.count)
+  }
 }
 
 public extension Collection where Element: Equatable {
+  // MARK: - Methods
+
   ///- Returns: `nil` if `element` isn't present
   @inlinable func prefix(upTo element: Element) -> SubSequence? {
     firstIndex(of: element).map(prefix(upTo:))

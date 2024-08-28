@@ -63,6 +63,17 @@ public extension Sequence {
     }
   }
 
+  /// - Precondition: The indices must be sorted, and non-negative.
+  subscript(sorted indices: some Sequence<Int>) -> some Sequence<Element> {
+    var iterator = makeIterator()
+    return indices.differences.mapUntilNil {
+      if case let skipCount = $0 - 1, skipCount > 0 {
+        repeatElement((), count: skipCount).forEach { iterator.iterate() }
+      }
+      return iterator.next()
+    }
+  }
+
   // MARK: - Methods
   
   /// The minimum element in the sequence, using a comparison closure.
@@ -251,6 +262,17 @@ public extension Sequence {
     ) else { throw Error.noMatches }
 
     return onlyMatch
+  }
+
+
+  /// The elements of this sequence, and the ones after them.
+  /// - Note: Every returned array will have the same count,
+  /// so this stops short of the end of the sequence by `count - 1`.
+  /// - Precondition: `count > 0`
+  @inlinable func windows(ofCount count: Int) -> some Sequence<
+    CompactedSequence<[Element?], Element>
+  > {
+    (0..<count).map(Array(self).dropFirst).transposed
   }
 
   /// - Parameters:

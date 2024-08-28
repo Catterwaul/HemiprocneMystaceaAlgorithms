@@ -11,4 +11,14 @@ public extension Sequence where Element: Sequence {
       }
     }
   }
+
+  /// Like `zip`, but with no limit to how many sequences are zipped.
+  var transposed: some Sequence<
+    CompactedSequence<[Element.Element?], Element.Element>
+  > {
+    sequence(state: map { $0.makeIterator() }) { iterators in
+      iterators.indices.lazy.map { iterators[$0].next() }
+        .compactedIfAllAreSome()
+    }
+  }
 }

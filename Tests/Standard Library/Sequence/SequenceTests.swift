@@ -53,6 +53,11 @@ struct SequenceTests {
     )
   }
 
+  @Test func test_shifted() {
+    let shifted = stride(from: 0, through: 3, by: 1).rotated(by: 1)
+    #expect(Array(shifted) == [1, 2, 3, 0])
+  }
+
   @Test func sorted() {
     struct TypeWith1EquatableProperty: Equatable {
       let int: Int

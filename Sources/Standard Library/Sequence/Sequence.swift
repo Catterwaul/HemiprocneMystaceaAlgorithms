@@ -104,28 +104,6 @@ public extension Sequence {
   }
 
   // MARK: -
-
-  /// The only match for a predicate.
-  /// - Throws: `Error`, `AnySequence<Element>.OnlyMatchError`
-  @inlinable func onlyMatch<Error>(
-    for isMatch: (Element) throws(Error) -> Bool
-  ) throws -> Element {
-    typealias Error = AnySequence<Element>.OnlyMatchError
-    guard let onlyMatch: Element = (
-      try reduce(into: nil) { onlyMatch, element in
-        switch (onlyMatch, try isMatch(element)) {
-        case (_, false): break
-        case (nil, true): onlyMatch = element
-        case (.some, true): throw Error.moreThanOneMatch
-        }
-      }
-    ) else { throw Error.noMatches }
-
-    return onlyMatch
-  }
-
-  // MARK: -
-
   /// A `Collection` of all non-nil elements whose `optional`s are also non-nil.
   /// - Parameter optional: Transforms an `Element` into an `Optional`.
   /// - Returns: A `Collection` of tuples of non-nil elements with their `optional`s unwrapped.
@@ -144,6 +122,25 @@ public extension Sequence {
     (0..<shareCount).lazy.map {
       .init(dropFirst($0).striding(by: shareCount))
     }
+  }
+
+  /// The only match for a predicate.
+  /// - Throws: `Error`, `AnySequence<Element>.OnlyMatchError`
+  @inlinable func onlyMatch<Error>(
+    for isMatch: (Element) throws(Error) -> Bool
+  ) throws -> Element {
+    typealias Error = AnySequence<Element>.OnlyMatchError
+    guard let onlyMatch: Element = (
+      try reduce(into: nil) { onlyMatch, element in
+        switch (onlyMatch, try isMatch(element)) {
+        case (_, false): break
+        case (nil, true): onlyMatch = element
+        case (.some, true): throw Error.moreThanOneMatch
+        }
+      }
+    ) else { throw Error.noMatches }
+
+    return onlyMatch
   }
 
   /// Like `prefix(while:)`, but including one more element.
@@ -172,6 +169,12 @@ public extension Sequence {
         IteratorSequence(iterator).reduce(first, nextPartialResult)
       )
     }
+  }
+
+  /// The collection, rotated by an offset.
+  @inlinable func rotated(by shift: Int) -> any Sequence<Element> {
+    if shift >= 0 { chain(dropFirst(shift), prefix(shift)) }
+    else { chain(suffix(-shift), dropLast(-shift)) }
   }
 }
 

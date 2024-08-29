@@ -157,7 +157,10 @@ public extension Sequence {
       return next
     }
   }
-  
+
+  /// Returns the accumulated result of combining the elements of the sequence using the given closure.
+  /// - Parameter transform: A closure that combines the previously reduced
+  ///   result and the next element in the receiving sequence.
   /// - Returns: `nil` If the sequence has no elements, instead of an "initial result".
   @inlinable func reduce<Error>(
     _ nextPartialResult: (Element, Element) throws(Error) -> Element

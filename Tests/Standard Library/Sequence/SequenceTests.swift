@@ -53,6 +53,15 @@ struct SequenceTests {
     )
   }
 
+  @Test func reduce() {
+    let sequence = [1, 2, 3, 4]
+    #expect(sequence.reductions(+) == [1, 3, 6, 10])
+    #expect(sequence.reduce(+) == 10)
+
+    #expect(EmptyCollection<Int>().reductions(+) == [])
+    #expect(EmptyCollection<Int>().reduce(+) == nil)
+  }
+
   @Test func test_shifted() {
     let shifted = stride(from: 0, through: 3, by: 1).rotated(by: 1)
     #expect(Array(shifted) == [1, 2, 3, 0])

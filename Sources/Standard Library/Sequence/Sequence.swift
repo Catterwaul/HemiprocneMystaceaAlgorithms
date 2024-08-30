@@ -163,13 +163,13 @@ public extension Sequence {
   ///   result and the next element in the receiving sequence.
   /// - Returns: `nil` If the sequence has no elements, instead of an "initial result".
   @inlinable func reduce<Error>(
-    _ nextPartialResult: (Element, Element) throws(Error) -> Element
+    _ transform: (Element, Element) throws(Error) -> Element
   ) throws(Error) -> Element? {
     var iterator = makeIterator()
     return try iterator.next().map { first throws(Error) in
       try forceCastError(
         to: Error.self,
-        IteratorSequence(iterator).reduce(first, nextPartialResult)
+        IteratorSequence(iterator).reduce(first, transform)
       )
     }
   }

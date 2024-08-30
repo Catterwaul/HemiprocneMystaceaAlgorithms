@@ -7,7 +7,7 @@ git checkout github-pages
 
 swift package \
   --allow-writing-to-directory ./docs \
-  generate-documentation --target HemiprocneMystaceaAlgorithms \
+  generate-documentation --target HMAlgorithms \
   --disable-indexing \
   --transform-for-static-hosting \
   --hosting-base-path HemiprocneMystaceaAlgorithms \

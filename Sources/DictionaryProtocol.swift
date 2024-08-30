@@ -34,17 +34,17 @@ where Element == (key: Key, value: Value) {
   // MARK: - defined in this file
   /// Group key-value pairs by their keys.
   ///
+  /// **Returns:** `[Key: [ValueElement]]`
   /// - Parameter pairs: Either `KeyValuePairs<Key, Value.Element>`
   ///   or a `Sequence` with the same element type as that.
-  /// - Returns: `[Key: [ValueElement]]`
   init<ValueElement>(grouping pairs: some Sequence<(key: Key, value: ValueElement)>)
   where Value == [ValueElement]
 
   /// Group key-value pairs by their keys.
   ///
+  /// **Returns:** `[Key: [ValueElement]]`.
   /// - Parameter pairs: Like `KeyValuePairs<Key, Value.Element>`,
   ///   but with unlabeled elements.
-  /// - Returns: `[Key: [ValueElement]]`
   init<ValueElement>(grouping pairs: some Sequence<(Key, ValueElement)>)
   where Value == [ValueElement]
 }
@@ -59,7 +59,6 @@ public extension DictionaryProtocol {
   ///
   /// - Parameter keysAndValues: A sequence of key-value pairs to use for
   ///   the new dictionary. Every key in `keysAndValues` must be unique.
-  /// - Returns: A new dictionary initialized with the elements of `keysAndValues`.
   /// - Precondition: The sequence must not have duplicate keys.
   /// - Note: Differs from the initializer in the standard library, which doesn't allow labeled tuple elements.
   ///     This can't support *all* labels, but it does support `(key:value:)` specifically,

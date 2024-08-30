@@ -1,13 +1,13 @@
 import func Algorithms.product
 
-/// The `product` of 3 underlying collections.
+/// The Cartesian `product` of 3 underlying collections.
 @inlinable public func product3<Base1: Collection, Base2: Collection, Base3: Collection>(
   _ s1: Base1, _ s2: Base2, _ s3: Base3
 ) -> some Collection<(Base1.Element, Base2.Element, Base3.Element)> {
   product(s1, product(s2, s3)).lazy.map { ($0, $1.0, $1.1) }
 }
 
-/// The `product` of 4 underlying collections.
+/// The Cartesian `product` of 4 underlying collections.
 @inlinable public func product4<
   Base1: Collection, Base2: Collection, Base3: Collection, Base4: Collection
 >(

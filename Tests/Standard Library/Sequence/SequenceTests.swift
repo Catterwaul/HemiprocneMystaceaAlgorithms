@@ -29,6 +29,23 @@ struct SequenceTests {
     )
   }
 
+  @Test func interspersed() {
+    let oddsTo7 = stride(from: 1, to: 7, by: 2)
+    let evensThrough10 = stride(from: 2, through: 10, by: 2)
+    let oneThrough6 = Array(1...6)
+
+    #expect(
+      Array(oddsTo7.interspersed(with: evensThrough10))
+      == oneThrough6
+    )
+
+    #expect(
+      Array(
+        oddsTo7.interspersed(with: evensThrough10, keepingLongerSuffix: true)
+      ) == oneThrough6 + [8, 10]
+    )
+  }
+
   @Test func max_and_min() {
     let dictionary = ["1️⃣": 1, "🔟": 10, "💯": 100]
     #expect(dictionary.min(by: \.value)?.key == "1️⃣")

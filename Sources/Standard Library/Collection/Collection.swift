@@ -2,7 +2,7 @@ import Algorithms
 
 /// Thrown when `[validating:]` is called with an invalid index.
 public struct IndexingError<Collection: Swift.Collection>: Error {
-  @inlinable public init() { }
+  @usableFromInline init() { }
 }
 
 public extension Collection {

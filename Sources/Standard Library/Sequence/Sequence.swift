@@ -124,6 +124,28 @@ public extension Sequence {
     }
   }
 
+  /// Alternates between the elements of two sequences.
+  /// - Parameter keepSuffix:
+  /// When `true`, and the sequences have different lengths,
+  /// the suffix of `interleaved`  will be the suffix of the longer sequence.
+  @inlinable func interspersed(
+    with sequence: some Sequence<Element>,
+    keepingLongerSuffix keepSuffix: Bool = false
+  ) -> some Sequence<Element> {
+    Swift.sequence(
+      state: (
+        AnyIterator(makeIterator()),
+        AnyIterator(sequence.makeIterator())
+      )
+    ) { iterators in
+      defer { iterators = (iterators.1, iterators.0) }
+      return
+        if let next = iterators.0.next() { next }
+        else if keepSuffix { iterators.1.next() }
+        else { nil }
+    }
+  }
+
   /// The only match for a predicate.
   /// - Throws: `Error`, `AnySequence<Element>.OnlyMatchError`
   @inlinable func onlyMatch<Error>(

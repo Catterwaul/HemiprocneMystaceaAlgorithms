@@ -6,6 +6,10 @@ This code primarily extends the [Swift Algorithms](https://github.com/apple/swif
 
 ## Topics
 
+### Sequence
+
+- ``Swift/Sequence/interspersed(with:keepingLongerSuffix:)``
+
 ### Collection
 
 - ``Swift/Collection/chunks(totalCount:)``

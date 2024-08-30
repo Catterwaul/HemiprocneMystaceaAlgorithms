@@ -20,3 +20,7 @@ This code primarily extends the Swift standard library.
 - ``Swift/Collection``
 - ``IndexingError``
 
+### SetAlgebra
+
+- ``SetAlgebraError``
+- ``Swift/SetAlgebra/Error``

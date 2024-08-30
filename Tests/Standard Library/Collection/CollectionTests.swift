@@ -37,11 +37,7 @@ struct CollectionTests {
     #expect("boogalawncare".prefix(through: "z") == nil)
   }
 
-  @available(
-    swift, deprecated: 6,
-    message: "Won't compile without the `shifted` constant"
-  )
-  @Test func test_shifted() {
+  @Test func rotated() {
     #expect(Array([0, 1, 2, 3].rotated(by: -1)) == [3, 0, 1, 2])
   }
 }

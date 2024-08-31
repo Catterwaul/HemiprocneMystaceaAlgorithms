@@ -6,7 +6,6 @@ This code primarily extends the Swift standard library.
 
 ## Topics
 
-- ``RangeProtocol``
 - ``Swift``
 
 ### Sequence

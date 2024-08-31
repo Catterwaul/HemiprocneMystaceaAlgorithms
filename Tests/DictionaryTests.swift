@@ -24,7 +24,13 @@ struct DictionaryTests {
   }
   
   // MARK: - Initializers
-  
+  @Test func init_bucketing() {
+    #expect(
+      [Character: _](bucketing: "🗑⚱️🗑🦌🦌🗑🗑🦌⚱️")
+      == ["⚱️": 2, "🗑": 4, "🦌": 3]
+    )
+  }
+
   @Test func init_uniqueKeysWithValues_KeyValuePairs() {
     func test<Dictionary: DictionaryProtocol<String, String> & Equatable>(_: Dictionary.Type) {
       #expect(

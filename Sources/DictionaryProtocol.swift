@@ -163,6 +163,7 @@ public extension DictionaryProtocol {
   }
 }
 
+// MARK: - Value: Equatable
 public extension DictionaryProtocol where Value: Equatable {
   /// The only key that maps to `value`.
   /// - Throws: `AnySequence<Element>.OnlyMatchError`
@@ -175,6 +176,7 @@ public extension DictionaryProtocol where Value: Equatable {
   }
 }
 
+// MARK: - Key == Value
 public extension DictionaryProtocol where Key == Value {
   /// The longest series of elements that will lead to `destination`.
   /// - Precondition: The elements represent a "`destination:source`" relationship.
@@ -183,6 +185,16 @@ public extension DictionaryProtocol where Key == Value {
     self[destination].map { _ in
       sequence(first: destination) { self[$0] }.reversed()
     }
+  }
+}
+
+// MARK: - Value == Int
+public extension DictionaryProtocol where Value == Int {
+  /// Create "buckets" from a sequence of keys,
+  /// such as might be used for a histogram.
+  /// - Note: This can be used for a "counted set".
+  @inlinable init(bucketing unbucketedKeys: some Sequence<Key>) {
+    self.init(zip(unbucketedKeys, constant: 1), uniquingKeysWith: +)
   }
 }
 

@@ -1,0 +1,78 @@
+{
+  "originHash" : "51e1a5b8dc712187e8ca676191a21238e8c2cfb646c5591748e7af4794e8ecb8",
+  "pins" : [
+    {
+      "identity" : "cast",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Catterwaul/Cast",
+      "state" : {
+        "branch" : "main",
+        "revision" : "ff40c9cb95e6070a9c5af8adf095e52efa1d13a9"
+      }
+    },
+    {
+      "identity" : "swift-algorithms",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-algorithms",
+      "state" : {
+        "branch" : "main",
+        "revision" : "34eec0dd27ba4b539fe01e61fac07c9227c65a63"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections",
+      "state" : {
+        "branch" : "main",
+        "revision" : "11433b688df0e0b8c3deee56c30294ed63d929eb"
+      }
+    },
+    {
+      "identity" : "swift-docc-plugin",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-docc-plugin",
+      "state" : {
+        "branch" : "main",
+        "revision" : "2eb22993b3dfd0c0d32729b357c8dabb6cd44680"
+      }
+    },
+    {
+      "identity" : "swift-docc-symbolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-docc-symbolkit",
+      "state" : {
+        "revision" : "b45d1f2ed151d057b54504d653e0da5552844e34",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics.git",
+      "state" : {
+        "revision" : "0a5bc04095a675662cf24757cc0640aa2204253b",
+        "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "thrappture",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Catterwaul/Thrappture",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e6aae00285098bf65c01ac154a677e6679973c11"
+      }
+    },
+    {
+      "identity" : "tuplay",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Catterwaul/Tuplay",
+      "state" : {
+        "branch" : "main",
+        "revision" : "05443f2becd263ea57238edf4bdd598a1112313f"
+      }
+    }
+  ],
+  "version" : 3
+}

@@ -99,9 +99,18 @@ struct SequenceTests {
     #expect(
       [(1, 2), (1, 1)].sorted(by: \.self).elementsEqual([(1, 1), (1, 2)], by: ==)
     )
+
+    let unsorted = [3, 0, 1, 2, -1]
+    let sorted = Array(-1...3)
+    #expect(try unsorted.sorted(by: \.self) == sorted)
+    #expect(unsorted.sorted(by: \.self, >) == sorted.reversed())
+
+    let unsortedTuples = [(1, 1), (0, 1), (1, 0), (0, 0)]
+    let sortedTuples = [(0, 1), (0, 0), (1, 1), (1, 0)]
+    #expect(try unsortedTuples.sorted(by: \.self, (<, >)).elementsEqual(sortedTuples, by: ==))
   }
 
-  @Test func isSorted() throws {
+  @Test func isSorted() {
     struct TypeWithComparable {
       let comparable: Int
     }
@@ -111,6 +120,7 @@ struct SequenceTests {
       stride(from: -random, through: random, by: random)
         .lazy.map(TypeWithComparable.init)
     let chain = chain(.init(comparable: -random), stride)
-    try #expect(try chain.isSorted(by: \.comparable))
+    let isSorted = chain.isSorted(by: \.comparable)
+    #expect(isSorted)
   }
 }

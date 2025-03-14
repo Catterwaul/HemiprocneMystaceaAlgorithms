@@ -393,13 +393,21 @@ public extension Sequence {
 
   // MARK: -
   /// Sorted by a common `Comparable` value, and sorting closure.
-  func sorted<Comparable: Swift.Comparable>(
-    by comparable: (Element) throws -> Comparable,
-    _ areInIncreasingOrder: (Comparable, Comparable) throws -> Bool
-  ) rethrows -> [Element] {
-    try sorted {
-      try areInIncreasingOrder(comparable($0), comparable($1))
-    }
+  @inlinable func sorted<each Comparable: Swift.Comparable, Error>(
+    by comparable: (Element) throws(Error) -> (repeat each Comparable),
+    _ areInIncreasingOrder: (repeat (each Comparable, each Comparable) throws(Error) -> Bool)
+  ) throws(Error) -> [Element] {
+    try forceCastError(
+      to: Error.self,
+      try sorted {
+        for (comparables, areInIncreasingOrder) in
+              repeat try ((each comparable($0), each comparable($1)), each areInIncreasingOrder) {
+          if try areInIncreasingOrder(comparables.0, comparables.1) { return true }
+          if try areInIncreasingOrder(comparables.1, comparables.0) { return false }
+        }
+        return false // Equality.
+      }
+    )
   }
 
   /// Sorted by two common `Comparable` values.

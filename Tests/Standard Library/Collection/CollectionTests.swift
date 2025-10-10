@@ -30,6 +30,23 @@ struct CollectionTests {
   }
 
   // MARK: - Methods
+  @Test func lastNonNil() {
+    let bidirectionalCollection: [() -> Int?] = [
+      { fatalError("Execution should not reach this point because this is a BidirectionalCollection.") },
+      { 1 },
+      { nil }
+    ]
+    #expect(bidirectionalCollection.lastNonNil { $0() } == 1)
+
+    sequence: do {
+      #expect(
+        stride(from: 1, through: 5, by: 1)
+          .lastNonNil { Optional($0).filter { $0 <= 3 } }
+        == 3
+      )
+    }
+  }
+
   @Test func prefix() {
     #expect("glorb14prawn".prefix(upTo: "1") == "glorb")
     #expect("glorb14prawn".prefix(through: "1") == "glorb1")

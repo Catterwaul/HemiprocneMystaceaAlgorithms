@@ -25,6 +25,25 @@ public extension Sequence {
   /// - Complexity: O(n)
   @inlinable var last: Element? { reduce { $1 } }
 
+  /// Returns the last non-`nil` result obtained from applying the given
+  /// transformation to the elements of the sequence.
+  ///
+  /// - Returns: The last non-`nil` return value of the transformation, or
+  ///   `nil` if no transformation is successful.
+  ///
+  /// - Complexity: O(*n*). Every element must be tested.
+  @inlinable func lastNonNil<Result, Error>(
+    _ transform: (Element) throws(Error) -> Result?
+  ) throws(Error) -> Result? {
+    var lastNonNil: Result?
+    for element in self {
+      if let nonNil = try transform(element) {
+        lastNonNil = nonNil
+      }
+    }
+    return lastNonNil
+  }
+
   /// Like `zip`ping with the iterators of all subsequences, incrementally dropping early elements.
   /// - Note: Begins with the iterator for the full sequence (dropping zero).
   @inlinable var withDropIterators: some Sequence<(element: Element, iterator: Iterator)> {

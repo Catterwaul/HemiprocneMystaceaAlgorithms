@@ -1,5 +1,5 @@
 {
-  "originHash" : "32977bb00af1e62ab30ff3bb9c7fb8d82ff14c7fff88a88b337ca42693c4dd80",
+  "originHash" : "dfab5688088996884875a4ed8923e1116e70548c510c7228f58f57bfe11f089b",
   "pins" : [
     {
       "identity" : "cast",
@@ -79,7 +79,7 @@
       "location" : "https://github.com/Catterwaul/Tuplay",
       "state" : {
         "branch" : "main",
-        "revision" : "05443f2becd263ea57238edf4bdd598a1112313f"
+        "revision" : "3a13af6e832f0a739e7a0eea4b8422a58303e17c"
       }
     }
   ],

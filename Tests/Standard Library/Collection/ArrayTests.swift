@@ -1,4 +1,4 @@
-import typealias Cast.Error
+import typealias Cast.CastError
 import HMAlgorithms
 import Testing
 
@@ -8,7 +8,7 @@ struct ArrayTests {
       try Array(mirrorChildValuesOf: (1, 2, 3, 4, 5)) == [1, 2, 3, 4, 5]
     )
 
-    #expect(throws: Cast.Error.self) {
+    #expect(throws: CastError.self) {
       _ = try [Int](mirrorChildValuesOf: (1, 2, "3", 4, 5))
     }
   }

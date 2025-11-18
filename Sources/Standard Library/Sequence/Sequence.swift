@@ -1,6 +1,7 @@
 import enum Foundation.SortOrder
 import Algorithms
 import Cast
+import HMError
 import Thrappture
 import Tuplé
 
@@ -62,10 +63,7 @@ public extension Sequence {
   @inlinable func min<Error>(
     by comparable: (Element) throws(Error) -> some Comparable
   ) throws(Error) -> Element? {
-    try forceCastError(
-      to: Error.self,
-      self.min { try comparable($0) < comparable($1) }
-    )
+    try self.min { try comparable($0) < comparable($1) } ¿! Error.self
   }
 
   /// - Returns: `min` for the elements with non-nil `comparable`s.
@@ -82,10 +80,7 @@ public extension Sequence {
   @inlinable func max<Error>(
     by comparable: (Element) throws(Error) -> some Comparable
   ) throws(Error) -> Element? {
-    try forceCastError(
-      to: Error.self,
-      self.max { try comparable($0) < comparable($1) }
-    )
+    try self.max { try comparable($0) < comparable($1) } ¿! Error.self
   }
 
   /// - Returns: `max` for the elements with non-nil `comparable`s.
@@ -102,10 +97,7 @@ public extension Sequence {
   @inlinable func sorted<each Comparable: Swift.Comparable, Error>(
     by comparable: (Element) throws(Error) -> (repeat each Comparable)
   ) throws(Error) -> [Element] {
-    try forceCastError(
-      to: Error.self,
-      sorted { try (repeat each comparable($0)) < (repeat each comparable($1)) }
-    )
+    try sorted { try (repeat each comparable($0)) < (repeat each comparable($1)) } ¿! Error.self
   }
 
   /// Whether the elements of this sequence are sorted by common `Comparable` values.
@@ -114,12 +106,9 @@ public extension Sequence {
   @inlinable func isSorted<each Comparable: Swift.Comparable, Error>(
     by comparable: (Element) throws(Error) -> (repeat each Comparable)
   ) throws(Error) -> Bool {
-    try forceCastError(
-      to: Error.self,
-      adjacentPairs().allSatisfy {
+      try adjacentPairs().allSatisfy {
         try (repeat each comparable($0)) <= (repeat each comparable($1))
-      }
-    )
+      } ¿! Error.self
   }
 
   // MARK: -
@@ -208,10 +197,7 @@ public extension Sequence {
   ) throws(Error) -> Element? {
     var iterator = makeIterator()
     return try iterator.next().map { first throws(Error) in
-      try forceCastError(
-        to: Error.self,
-        IteratorSequence(iterator).reduce(first, transform)
-      )
+      try IteratorSequence(iterator).reduce(first, transform) ¿! Error.self
     }
   }
 

@@ -1,5 +1,6 @@
 import typealias OrderedCollections.OrderedDictionary
 import Cast
+import HMError
 import Tuplé
 
 public protocol DictionaryProtocol<Key, Value>: Sequence & ExpressibleByDictionaryLiteral
@@ -131,10 +132,7 @@ public extension DictionaryProtocol {
     _ transform: (Key) throws(Error) -> Transformed?
   ) throws(Error) -> [Transformed: Value] {
     .init(
-      uniqueKeysWithValues: try forceCastError(
-        to: Error.self,
-        compactMap { key, value in try transform(key).map { ($0, value) } }
-      )
+      uniqueKeysWithValues: try compactMap { key, value in try transform(key).map { ($0, value) } } ¿! Error.self
     )
   }
 
@@ -156,10 +154,7 @@ public extension DictionaryProtocol {
     _ pairs: some Sequence<Element>,
     uniquingKeysWith combine: (Value, Value) throws(Error) -> Value
   ) throws(Error) {
-    try forceCastError(
-      to: Error.self,
-      merge(pairs.lazy.map(unlabeled), uniquingKeysWith: combine)
-    )
+    try merge(pairs.lazy.map(unlabeled), uniquingKeysWith: combine) ¿! Error.self
   }
 }
 
@@ -169,10 +164,7 @@ public extension DictionaryProtocol where Value: Equatable {
   /// - Throws: `AnySequence<Element>.OnlyMatchError`
   /// - Bug: Cannot use typed error signature.
   @inlinable func onlyKey(for value: Value) throws -> Key {
-    try forceCastError(
-      to: AnySequence<Element>.OnlyMatchError.self,
-      onlyMatch { $0.value == value } .key
-    )
+    try onlyMatch { $0.value == value } .key ¿! AnySequence<Element>.OnlyMatchError.self
   }
 }
 
